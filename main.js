@@ -79,31 +79,30 @@ keysData.forEach(e => {
 })
 
 /* keysData.forEach(e => {
-  let buttonConstructor = document.createElement('button')
-  let buttonData = `class="${ e.class }"
-                     data-atribute="${ e.action }"
-                      ${ e.text }`
-  buttonConstructor.innerText = buttonData
-  keys.appendChild(buttonConstructor)
-  console.log(buttonConstructor.outerHTML)
-}) */
+    let buttonConstructor = document.createElement('button')
+    let buttonData = `class="${ e.class }"
+                       data-atribute="${ e.action }"
+                        ${ e.text }`
+    buttonConstructor.innerText = buttonData
+    keys.appendChild(buttonConstructor)
+    console.log(buttonConstructor.outerHTML)
+  }) */
 
 const calculate = (n1 = 0, operator = "", n2 = 0) => {
-  let result = ''
   const firstNum = parseFloat(n1)
   const secondNum = parseFloat(n2)
   if (operator === 'add') return firstNum + secondNum
-  if (operator === 'subtract') return firstNum - secondNum
   if (operator === 'divide') return result = firstNum / secondNum
   if (operator === 'multiply') return result = firstNum * secondNum
+  if (operator === 'subtract') return firstNum - secondNum
 }
 
 keys.addEventListener('click', e => {   //agrega eventos a las keys para que hagan mach con el nombre de etiqueta "boton"
   if (e.target.matches('button')) {
-    const key = e.target  //key es igual a evento target, evento fue creado en keys por lo que cada evento seria una tecla de la calculadora
     const action = key.dataset.action // action es igual a el data set de cada key
-    const keyContent = key.textContent
     const displayedNum = display.textContent
+    const key = e.target  //key es igual a evento target, evento fue creado en keys por lo que cada evento seria una tecla de la calculadora
+    const keyContent = key.textContent
     const previousKeyType = calculator.dataset.previousKeyType
 
     Array.from(key.parentNode.children)
@@ -184,8 +183,8 @@ keys.addEventListener('click', e => {   //agrega eventos a las keys para que hag
     }
 
     if (action === 'calculate') {
-      let firstValue = calculator.dataset.firstValue
       const operator = calculator.dataset.operator
+      let firstValue = calculator.dataset.firstValue
       let secondValue = displayedNum
 
       if (firstValue) {
