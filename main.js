@@ -1,5 +1,5 @@
-const calculator = document.querySelector('.calculator') //selecciona el contenedor calculadora
-const keys = calculator.querySelector('.calculator__keys') // selecciona el cnooenedor hijo de calculadora con nombre keys
+const calculator = document.querySelector('.calculator')
+const keys = calculator.querySelector('.calculator__keys')
 const display = document.querySelector('.calculator__display')
 const keysData = [  {
     class: "key--operator",
@@ -66,18 +66,23 @@ const keysData = [  {
   }
 ]
 
-keysData.forEach(e => {
-  let buttonConstructor = document.createElement('button')
-  buttonConstructor.classList.add(e.class)
-  buttonConstructor.setAttribute("data-action", e.action)
-  buttonConstructor.textContent = e.text
-  if (buttonConstructor.classList.contains("undefined") && buttonConstructor.matches('[data-action="undefined"]')) {
-    buttonConstructor.classList.remove("undefined")
-    buttonConstructor.removeAttribute('data-action')
-  }
-  keys.appendChild(buttonConstructor)
-})
+const  buttonKeyRender = () => {
+  keysData.forEach(e => {
+    let buttonConstructor = document.createElement('button')
+    buttonConstructor.classList.add(e.class)
+    buttonConstructor.setAttribute("data-action", e.action)
+    buttonConstructor.textContent = e.text
+    if (buttonConstructor.classList.contains("undefined") && buttonConstructor.matches('[data-action="undefined"]')) {
+      buttonConstructor.classList.remove("undefined")
+      buttonConstructor.removeAttribute('data-action')
+    }
+    keys.appendChild(buttonConstructor)
+  })
+}
 
+buttonKeyRender()
+
+//Another way to render buttons
 /* keysData.forEach(e => {
     let buttonConstructor = document.createElement('button')
     let buttonData = `class="${ e.class }"
@@ -99,21 +104,21 @@ const calculate = (n1 = 0, operator = "", n2 = 0) => {
 
 keys.addEventListener('click', e => {   //agrega eventos a las keys para que hagan mach con el nombre de etiqueta "boton"
   if (e.target.matches('button')) {
-    const action = key.dataset.action // action es igual a el data set de cada key
     const displayedNum = display.textContent
     const key = e.target  //key es igual a evento target, evento fue creado en keys por lo que cada evento seria una tecla de la calculadora
     const keyContent = key.textContent
     const previousKeyType = calculator.dataset.previousKeyType
+    const action = key.dataset.action // action es igual a el data set de cada key
 
     Array.from(key.parentNode.children)
       .forEach(elem => elem.classList.remove('is-depressed'))
 
-     if (!action) {
+    if (!action) {
       if (displayedNum === '0' ||
           previousKeyType === 'operator' ||
           previousKeyType === 'calculate'
-        ) {
-          display.textContent = keyContent
+      ) {
+        display.textContent = keyContent
       } else {
         display.textContent = displayedNum + keyContent
       }
@@ -192,7 +197,6 @@ keys.addEventListener('click', e => {   //agrega eventos a las keys para que hag
           firstValue = displayedNum
           secondValue = calculator.dataset.modValue
         }
-
         display.textContent = calculate(firstValue, operator, secondValue)
       }
 
