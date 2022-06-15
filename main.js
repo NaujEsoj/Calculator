@@ -1,97 +1,129 @@
 const calculator = document.querySelector('.calculator')
 const display = calculator.querySelector('.calculator__display')
 const keys = calculator.querySelector('.calculator__keys')
-const keysData = [  {
-  class: "key--operator",
-  action:"add",
-  text: "+"
-},
-{
-  class: "key--operator",
-  action:"subtract",
-  text: "-"
-},
-{
-  class: "key--operator",
-  action:"multiply",
-  text: "*"
-},
-{
-  class: "key--operator",
-  action:"divide",
-  text: "/"
-},
-{
-  text: "7"
-},
-{
-  text: "8"
-},
-{
-  text: "9"
-},
-{
-  text: "4"
-},
-{
-  text: "5"
-},
-{
-  text: "6"
-},
-{
-  text: "1"
-},
-{
-  text: "2"
-},
-{
-  text: "3"
-},
-{
-  text: "0"
-},
-{
-  action: "decimal",
-  text: "."
-},
-{
-  action: "clear",
-  text: "AC"
-},
-{
-  class: "key--equal",
-  action: "calculate",
-  text: "="
-}
+const keysData = [
+  {
+    action: 'add',
+    class: 'key--operator',
+    text: '+'
+  },
+  {
+    action: 'subtract',
+    class: 'key--operator',
+    text: '-'
+  },
+  {
+    action: 'multiply',
+    class: 'key--operator',
+    text: '*'
+  },
+  {
+    action: 'divide',
+    class: 'key--operator',
+    text: '/'
+  },
+  {
+    action: null,
+    class: null,
+    text: '7'
+  },
+  {
+    action: null,
+    class: null,
+    text: '8'
+  },
+  {
+    action: null,
+    class: null,
+    text: '9'
+  },
+  {
+    action: null,
+    class: null,
+    text: '4'
+  },
+  {
+    action: null,
+    class: null,
+    text: '5'
+  },
+  {
+    action: null,
+    class: null,
+    text: '6'
+  },
+  {
+    action: null,
+    class: null,
+    text: '1'
+  },
+  {
+    action: null,
+    class: null,
+    text: '2'
+  },
+  {
+    action: null,
+    class: null,
+    text: '3'
+  },
+  {
+    action: null,
+    class: null,
+    text: '0'
+  },
+  {
+    action: 'decimal',
+    class: null,
+    text: '.'
+  },
+  {
+    action: 'clear',
+    class: null,
+    text: 'AC'
+  },
+  {
+    action: 'calculate',
+    class: 'key--equal',
+    text: '='
+  }
 ]
 
-const  buttonKeyRender = () => {
+const  createButtonKeys = () => {
   keysData.forEach(e => {
     let buttonConstructor = document.createElement('button')
-    buttonConstructor.classList.add(e.class)
-    buttonConstructor.setAttribute("data-action", e.action)
-    buttonConstructor.textContent = e.text
-    if (buttonConstructor.classList.contains("undefined") && buttonConstructor.matches('[data-action="undefined"]')) {
-      buttonConstructor.classList.remove("undefined")
-      buttonConstructor.removeAttribute('data-action')
-    }
+    if (e.class) buttonConstructor.className= e.class
+    if (e.action) buttonConstructor.setAttribute('data-action', e.action)
+    if (e.text) buttonConstructor.textContent = e.text
     keys.appendChild(buttonConstructor)
   })
 }
 
-buttonKeyRender()
+createButtonKeys()
 
 //Another way to render buttons, not working yet.
-/* keysData.forEach(e => {
-  let buttonConstructor = document.createElement('button')
-  let buttonData = `class="${ e.class }"
-                     data-atribute="${ e.action }"
-                      ${ e.text }`
-  buttonConstructor.innerText = buttonData
-  keys.appendChild(buttonConstructor)
-  console.log(buttonConstructor.outerHTML)
-}) */
+/*  how to use template literals
+const createButtons = (buttonsArray =[]) => {
+  //  1. create empty string
+  let buttonsText = ''
+  buttonsArray.forEach(button => {
+     // 2. update empty array with html(literal HTML !!! tagName, class, id etc)
+    buttonsText += `
+      <button
+        class="${button.class ? button.class : ''} "
+        data-action="${button.action ? button.action : ''}"
+        id="${typeof button.text === 'number' ? 'numberKey' : ''}"
+      >
+        ${button.text ? button.text : ''}
+      </button>
+    `
+  })
+  console.log(buttonsText);
+  // 3. add text inside parent element as HTML
+  keys.innerHTML = buttonsTex  const number = document.querySelector('#numberKey');
+  number.addEventListener('click', (e) => alert(e.target.innerText));
+  console.log(number);
+} */
 
 function calculate(n1, operator, n2) {
   const firstNum = parseFloat(n1)
@@ -106,14 +138,9 @@ const getKeyType = key => {
   const { action } = key.dataset
   if (!action) return 'number'
 
-
-  //if (action.includes('add', 'subtract', 'multiply', 'divide'))
-  if (
-    action === 'add' ||
-    action === 'subtract' ||
-    action === 'multiply' ||
-    action === 'divide'
-  ) return 'operator'
+  const actions = ['add', 'subtract', 'multiply', 'divide']
+  if (actions.includes(action))
+  return 'operator'
   console.log(key, action, typeof action);
   return action
 }
